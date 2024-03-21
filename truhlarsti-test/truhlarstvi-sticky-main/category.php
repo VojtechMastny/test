@@ -43,11 +43,11 @@ if ($selectedCategory !== 'all' && is_dir($categoryDir)) {
 }
 
 // Generate gallery items
-foreach ($images as $image) {
+foreach ($images as $index => $image) {
     $imageFilename = basename($image);
     echo '<div class="gallery-item">';
     echo '<div class="gallery-item-inner">';
-    echo '<img src="' . $image . '" alt="' . $imageFilename . '">';
+    echo '<img class="enlarge-img" src="' . $image . '" alt="' . $imageFilename . '" onclick="showImage(' . $index . ')">';
     echo '</div>';
     if (isset($_SESSION['loggedin']) && $_SESSION['username'] === 'admin') {
         echo '<div class="delete-button">';
@@ -61,3 +61,136 @@ foreach ($images as $image) {
     echo '</div>';
 }
 ?>
+
+<!-- Add modal or lightbox container -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg">
+    <a class="prev" onclick="showPrevious()">&#10094;</a>
+    <a class="next" onclick="showNext()">&#10095;</a>
+</div>
+
+
+
+<style>
+    /* Modal or lightbox styles */
+    .modal {
+     display: none;
+        position: fixed;
+        z-index: 9999;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+        transition: opacity 0.25s ease;
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+        transition: transform 0.3s ease; /* Add slide animation */
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 80px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Cursor pointer on hover */
+    .enlarge-img:hover {
+        cursor: pointer;
+    }
+
+    /* Arrows */
+    .prev,
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 40px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        z-index: 1; /* Ensure arrows appear above the image */
+    }
+
+    /* Position the arrows */
+    .prev {
+        left: 0;
+    }
+
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+    /* Fade in the arrows when hovering over the image */
+    .modal-content:hover .prev,
+    .modal-content:hover .next {
+        display: block;
+    }
+</style>
+
+
+
+
+<!-- Add JavaScript to handle image enlargement -->
+<script>
+    // JavaScript for navigating through images
+    var modalImg = document.getElementById("modalImg");
+    var modalIndex = 0;
+    var images = <?php echo json_encode($images); ?>;
+    var modalContent = document.querySelector('.modal-content');
+
+    function closeModal() {
+        document.getElementById("imageModal").style.display = "none";
+    }
+
+    function showImage(index) {
+        modalIndex = index;
+        modalImg.src = images[index];
+        modalContent.style.transform = 'translateX(0%)'; // Reset transform
+        document.getElementById("imageModal").style.display = "block";
+    }
+
+    function showNext() {
+        modalIndex = (modalIndex + 1) % images.length;
+        modalContent.style.transform = 'translateX(-100%)'; // Slide animation
+        setTimeout(function () {
+            modalImg.src = images[modalIndex];
+            modalContent.style.transform = 'translateX(0%)'; // Reset transform after animation
+        }, 300); // Wait for animation to finish (same duration as transition in CSS)
+    }
+
+    function showPrevious() {
+        modalIndex = (modalIndex - 1 + images.length) % images.length;
+        modalContent.style.transform = 'translateX(100%)'; // Slide animation
+        setTimeout(function () {
+            modalImg.src = images[modalIndex];
+            modalContent.style.transform = 'translateX(0%)'; // Reset transform after animation
+        }, 300); // Wait for animation to finish (same duration as transition in CSS)
+    }
+    
+</script>

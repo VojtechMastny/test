@@ -8,6 +8,40 @@ session_start();
   $result = $conn->query($sql);
 ?>
 
+<?php
+if (isset($_POST['delete_post'])) {
+    $postId = $_POST['id'];
+
+    // Retrieve the filename of the image associated with the post
+    $stmt = $conn->prepare("SELECT image FROM calc WHERE id = :id");
+    $stmt->bindParam(':id', $postId);
+    $stmt->execute();
+    $post = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Delete the post from the database
+    $stmt = $conn->prepare("DELETE FROM calc WHERE id = :id");
+    $stmt->bindParam(':id', $postId);
+    if ($stmt->execute()) {
+        // Delete the associated image file
+        $imagePath = "assets/images/calc" . $post['image'];
+        if (file_exists($imagePath)) {
+            if (unlink($imagePath)) {
+                $_SESSION['calc_result'] = "Post and associated image successfully deleted.";
+            } else {
+                $_SESSION['calc_result'] = "Error deleting image file.";
+            }
+        } else {
+            $_SESSION['calc_result'] = "Image file not found.";
+        }
+    } else {
+        $_SESSION['calc_result'] = "Error deleting post.";
+    }
+
+    // Redirect back to the calculation page
+    header("Location: calcu.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="cs-cz" dir="ltr">
 <head> 
@@ -68,6 +102,15 @@ session_start();
       echo '<div class="text">';
       echo '<h3 class="tcenter">'.$row['title'].'</h3>';
       echo '<p>Cena: <strong>'.$row['price'].' Kč</strong></p>';
+      if (isset($_SESSION['loggedin']) && $_SESSION['username'] === 'admin') {
+        echo '<div class="button-container">';
+        echo "<form method='post'>";
+        echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+        echo "<button type='submit' name='delete_post' >Smazat</button>";
+        echo "</form>";
+        echo "<a href='calc_edit.php?id=" . $row['id'] . "'><button>Edit</button></a>";
+        echo '</div>';
+      }
       echo '</div>';
       echo '</div>';
       echo '</div>';
@@ -98,7 +141,7 @@ session_start();
 </div>
 <?php endif; ?>
 
-<footer class="footer">
+<footer class="<?php echo ((isset($_SESSION['loggedin']) && $_SESSION['username'] === 'admin') || ($calc && $calc->rowCount() > 0)) ? 'footer' : 'footer-2'; ?>">
     <div class="container">
         <div class="row">
             <div class="footer-col">

@@ -1,17 +1,11 @@
 
-.body{
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
+
 
 .container-blog {
-    margin-top: 60px; /* Adjust as needed */
-    margin-bottom: 50px;
    z-index: 1;
     max-width: 800px; 
     margin: 50 auto;
-    margin-top: 15%;
+    margin-top: 30%;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 18px;
     display: flex;
@@ -21,18 +15,13 @@
 }
 
 .background{
-
-    display: flex;
-    flex-direction: column;
- 
- z-index: -1;
+   height: cover;
+    
     background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.admin-form {
-    margin-bottom: 100px; /* Adjust as needed to ensure space for the admin form */
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 }
 
 .form-box {
@@ -88,6 +77,10 @@ input[type="file"]::file-selector-button {
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     word-wrap: break-word; /* Přerušení slov v delším textu */
+}
+.no-news-container {
+    text-align: center;
+   font-size: 25px;
 }
 
 .result-box h2 {
@@ -146,7 +139,24 @@ button:hover {
 }
 
 
-
+.post {
+    position: absolute;
+    align-items: center;
+    inset: 0;
+    opacity: 0;
+    transition: 200ms opacity ease-in-out;
+    transition-delay: 200ms;
+    z-index: -1;
+  }
+  
+  .post>img {
+    display: inline;
+    width: 100%;
+    object-fit: cover;
+    border: none;
+    object-position: center;
+  
+  }
 
 .result-box h2 {
     color: black;

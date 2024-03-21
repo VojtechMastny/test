@@ -11,25 +11,25 @@ $categories = $stmt->fetchAll();
 
 <?php
 if(isset($_POST['delete_post'])) {
-    // Include database connection
+    
     require_once 'Database.php';
 
-    // Get post ID from form submission
+   
     $post_id = $_POST['id'];
 
-    // Prepare SQL statement
+   
     $stmt = $db->conn->prepare("DELETE FROM blog WHERE id = :id");
 
-    // Bind parameters
+    
     $stmt->bindParam(':id', $post_id);
 
-    // Execute the statement
+
     if($stmt->execute()) {
-        // Redirect to blog page or display success message
+        
         header("Location: blog.php");
         exit();
     } else {
-        // Handle error
+      
         echo "Error deleting post.";
     }
 }
@@ -83,13 +83,7 @@ if(isset($_POST['delete_post'])) {
 </header>
 <body>
 
-<div class ="background">
 
-                <li class="slide" data-active>
-                    <img src="assets/images/foto1.2.png" alt="">
-                </li>
-          
-</div>
 
 
 <div id="result" class="result">
@@ -131,7 +125,7 @@ if(isset($_POST['delete_post'])) {
             echo "</div>";
         }
     } else {
-        echo "No news available";
+         echo "<div class='no-news-container'><h3>Zatím tu nejsou žádné příspěvky</h3></div>";
     }
     ?>
 </div>
@@ -172,7 +166,7 @@ if(isset($_POST['delete_post'])) {
 <?php endif; ?>
 
 
-    <footer class="footer-3">
+<footer class="<?php echo ((isset($_SESSION['loggedin']) && $_SESSION['username'] === 'admin') || ($result && $result->rowCount() > 0)) ? 'footer' : 'footer-2'; ?>">
         <div class="container">
             <div class="row">
                 <div class="footer-col">

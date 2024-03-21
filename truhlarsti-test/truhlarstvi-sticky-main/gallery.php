@@ -74,7 +74,7 @@ require_once 'Database.php';
 </section>
 
 <?php if (isset($_SESSION['loggedin']) && $_SESSION['username'] === 'admin'): ?>
-    <div class="container-blog"> 
+    <div class="container-gallery"> 
     <div class="form-box">
         <form id="contactForm" action="post.php" method="POST" enctype="multipart/form-data">
             <div>

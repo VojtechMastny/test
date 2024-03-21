@@ -66,51 +66,15 @@
     </div>
   </div>
 
-  <?php
 
 
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form data
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $subject = $_POST['subject'];
-    $message = $_POST['message'];
-
-    // Set recipient email address
-    $to = "mastnyv.04@spst.eu";
-
-    // Set email headers
-    $headers = "From: $name <$email>" . "\r\n";
-    $headers .= "Reply-To: $email" . "\r\n";
-    $headers .= "Content-Type: text/plain; charset=utf-8" . "\r\n";
-
-    // Send email
-    $success = mail($to, $subject, $message, $headers);
-
-    // Check if email was sent successfully
-    if ($success) {
-        $_SERVER['email_sent'] = true;
-    } else {
-        $_SERVER['email_sent'] = false;
-    }
-
-    // Redirect back to the same page to prevent form resubmission
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
-
-// Check if email was sent successfully
-$email_sent = isset($_SESSION['email_sent']) ? $_SESSION['email_sent'] : null;
-
-// Clear the session variable
-unset($_SERVER['email_sent']);
-?>
 
 
-<div class="container-contact">
+
+
+  <div class="container-contact">
     <h2>Kontaktujte nás</h2>
-    <form method="post">
+    <form id="contactForm">
         <label for="name">Jméno:</label>
         <input type="text" id="name" name="name" required>
 
@@ -126,6 +90,24 @@ unset($_SERVER['email_sent']);
         <input type="submit" value="Odeslat">
     </form>
 </div>
+
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+     
+        var formData = new FormData(this);
+
+     
+        var emailBody = "Name: " + formData.get("name") + "\n";
+        emailBody += "Email: " + formData.get("email") + "\n";
+        emailBody += "Subject: " + formData.get("subject") + "\n";
+        emailBody += "Message: " + formData.get("message");
+
+       
+        window.location.href = "mailto:mastnyv.04@spst.eu?subject=Contact Form Submission&body=" + encodeURIComponent(emailBody);
+    });
+</script>
 
   <footer class="footer">
     <div class="container">
