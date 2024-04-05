@@ -1,0 +1,193 @@
+
+
+
+.container-blog {
+   z-index: 1;
+    max-width: 800px; 
+    margin: 50px auto;
+    margin-top: 8%;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;  
+}
+
+.background{
+   height: cover;
+    
+    background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+}
+
+.form-box {
+  
+    max-width: 100%; 
+    margin-bottom: 20px; 
+    padding: 20px;
+    word-wrap: break-word;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+input[type="file"]::file-selector-button {
+    border-radius: 4px;
+    padding: 0 16px;
+    height: 40px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+    margin-right: 16px;
+    margin-bottom: 15px;
+    transition: background-color 200ms;
+  }
+  
+ 
+  input[type="file"]::file-selector-button:hover {
+    background-color: #f3f4f6;
+  }
+  
+ 
+  input[type="file"]::file-selector-button:active {
+    background-color: #e5e7eb;
+  }
+
+  .result{
+    padding-top: 10vh;
+    padding-bottom: 3vh;
+  }
+
+.result-box {
+    padding-top: 5vh;
+    max-width: 600px; 
+    margin: 0 auto; 
+   
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word; 
+}
+.no-news-container {
+    padding-top:20px;
+    text-align: center;
+   font-size: 25px;
+}
+
+.result-box h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+
+.result-box p {
+    padding-top: 2%;
+    margin-bottom: 10px;
+}
+form {
+    margin: 0; /* Resetujeme margin formuláře, aby se nevztahoval na okraje boxu */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea,
+select,
+button {
+    width: 300px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button {
+    width: 324px; 
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.result-box {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    margin-bottom: 20px; 
+}
+
+
+.post {
+    position: absolute;
+    align-items: center;
+    inset: 0;
+    opacity: 0;
+    transition: 200ms opacity ease-in-out;
+    transition-delay: 200ms;
+    z-index: -1;
+  }
+  
+  .post>img {
+    display: inline;
+    width: 100%;
+    object-fit: cover;
+    border: none;
+    object-position: center;
+  
+  }
+
+.result-box h2 {
+    color: black;
+    margin: 0; 
+}
+
+.result-box strong {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+    .container-blog {
+        margin-top: 10%; 
+    }
+    
+    .form-box {
+        padding: 30px;
+    }
+    
+ 
+}
+
+
+@media screen and (max-width: 400px) {
+    input[type="text"],
+    textarea,
+    select,
+    button {
+        width: calc(100% - 20px);
+        padding: 15px; 
+        margin-bottom: 20px; 
+    }
+}
